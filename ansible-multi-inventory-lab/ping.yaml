@@ -1,0 +1,7 @@
+---
+- name: Test connectivity
+  hosts: webservers
+  gather_facts: no
+  tasks:
+    - name: Ping test
+      ping:

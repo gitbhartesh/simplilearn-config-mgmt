@@ -1,0 +1,14 @@
+---
+- name: Simple Demo Playbook
+  hosts: local
+  tasks:
+    - name: Create a file
+      file:
+        path: /tmp/hello_world.txt
+        state: touch
+      notify: Restart demo service
+
+  handlers:
+    - name: Restart demo service
+      debug:
+        msg: "Handler executed: Restart demo service"

@@ -1,0 +1,24 @@
+---
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+
+- name: Change Apache listen port to 8081
+  lineinfile:
+    path: /etc/apache2/ports.conf
+    regexp: '^Listen '
+    line: 'Listen 8081'
+
+- name: Update VirtualHost port
+  lineinfile:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    regexp: '^<VirtualHost '
+    line: '<VirtualHost *:8081>'
+
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
