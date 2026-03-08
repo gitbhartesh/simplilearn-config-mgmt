@@ -1,0 +1,9 @@
+Product List:
+{% for product in products %}
+- {{ product.name }} - ${{ product.price }}
+  {% if product.in_stock %}
+    ({{ discount }}% off)
+  {% else %}
+    (Out of stock)
+  {% endif %}
+{% endfor %}

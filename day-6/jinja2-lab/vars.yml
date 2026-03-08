@@ -1,0 +1,15 @@
+users:
+  - name: devuser
+    uid: 1501
+    shell: /bin/bash
+    password: "{{ 'Dev@123' | password_hash('sha512') }}"
+
+  - name: qauser
+    uid: 1502
+    shell: /bin/bash
+    password: "{{ 'Qa@123' | password_hash('sha512') }}"
+
+  - name: adminuser
+    uid: 1503
+    shell: /bin/bash
+    password: "{{ 'Admin@123' | password_hash('sha512') }}"

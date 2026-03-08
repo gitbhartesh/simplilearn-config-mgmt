@@ -1,0 +1,7 @@
+#!/bin/bash
+# Auto-generated user creation script
+{% for u in users %}
+# Creating user {{ u.name }}
+useradd -m -u {{ u.uid }} -s {{ u.shell }} {{ u.name }}
+echo "{{ u.name }}:{{ u.password }}" | chpasswd -e
+{% endfor %}

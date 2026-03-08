@@ -1,0 +1,16 @@
+Product List:
+
+- Laptop - $1000
+  
+    (10% off)
+  
+
+- Smartphone - $500
+  
+    (Out of stock)
+  
+
+- Tablet - $300
+  
+    (10% off)
+  
