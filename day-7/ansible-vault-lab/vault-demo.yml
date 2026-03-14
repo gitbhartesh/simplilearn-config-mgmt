@@ -1,0 +1,15 @@
+---
+- name: Vault Demo Playbook
+  hosts: local
+  become: yes
+  vars_files:
+    - secrets.yml
+
+  tasks:
+    - name: Show DB username
+      debug:
+        msg: "Database user is: {{ db_user }}"
+
+    - name: Show DB password
+      debug:
+        msg: "Database password is: {{ db_password }}"
