@@ -1,0 +1,3 @@
+# To give permission to Jenkins user run this command in terminal
+
+echo "jenkins ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
