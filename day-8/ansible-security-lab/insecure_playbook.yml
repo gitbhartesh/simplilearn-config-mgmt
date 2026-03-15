@@ -1,0 +1,16 @@
+---
+- name: Insecure Web Server Setup
+  hosts: localhost
+  become: yes
+
+  tasks:
+  - name: Install Apache
+    shell: apt-get install -y apache2
+
+  - name: Start Apache service
+    shell: systemctl start apache2
+
+  - name: Create admin user
+    user:
+      name: admin
+      password: admin123

@@ -1,0 +1,25 @@
+---
+- name: Secure Web Server Setup
+  hosts: localhost
+  become: true
+
+  vars:
+    admin_password: "{{ 'StrongPassword123' | password_hash('sha512') }}"
+
+  tasks:
+    - name: Install Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: true
+
+    - name: Ensure Apache is running
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
+
+    - name: Create admin user securely
+      ansible.builtin.user:
+        name: admin
+        password: "{{ admin_password }}"
