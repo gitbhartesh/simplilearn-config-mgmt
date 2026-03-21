@@ -1,0 +1,5 @@
+---
+app_name: "BsBlog"
+app_root: "/var/www/{{ app_name }}"
+listen_port: 8081
+server_name: "myapp.local"    # change to public IP / domain in production

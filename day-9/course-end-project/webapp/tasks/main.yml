@@ -1,0 +1,61 @@
+---
+# tasks file for webapp
+- name: Ensure apt cache is updated
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install Nginx
+  apt:
+    name: "{{ nginx_packages }}"
+    state: present
+  notify: restart nginx
+
+- name: Create app root directory
+  file:
+    path: "{{ app_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Copy application files
+  copy:
+    src: files/app/
+    dest: "{{ app_root }}/"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+  notify: restart nginx
+
+- name: Deploy Nginx site configuration
+  template:
+    src: nginx-site.j2
+    dest: /etc/nginx/sites-available/{{ app_name }}.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload nginx
+
+- name: Enable site by symlink
+  file:
+    src: /etc/nginx/sites-available/{{ app_name }}.conf
+    dest: /etc/nginx/sites-enabled/{{ app_name }}.conf
+    state: link
+    force: yes
+  notify: restart nginx
+
+- name: Remove default site if exists
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: Ensure app root has an index file (fallback)
+  copy:
+    content: "<html><body><h1>{{ app_name }} deployed</h1></body></html>"
+    dest: "{{ app_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+  when: not lookup('fileglob', '{{ app_root }}/*', errors='ignore')
